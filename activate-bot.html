@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate WhatsApp Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #202C33;
+            --dark: #111B21;
+            --darker: #0B141A;
+            --light: #FFFFFF;
+            --gray: #8696A0;
+            --success: #00A884;
+            --error: #F15C6D;
+            --warning: #FFC107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--dark);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: var(--secondary);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .form-container {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .status-message {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .status-message.info {
+            background-color: rgba(0, 168, 132, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--light);
+            display: block;
+        }
+
+        .status-message.success {
+            background-color: rgba(0, 168, 132, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--light);
+            display: block;
+        }
+
+        .status-message.error {
+            background-color: rgba(241, 92, 109, 0.1);
+            border-left: 4px solid var(--error);
+            color: var(--light);
+            display: block;
+        }
+
+        .status-message .icon {
+            margin-right: 8px;
+        }
+
+        .progress-container {
+            margin-top: 15px;
+            background-color: var(--secondary);
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .checklist {
+            margin-top: 15px;
+            list-style-type: none;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .checklist li .icon {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+                background-color: var(--dark);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp Bot Activation
+            </h1>
+            <p>Connect your WhatsApp account to enable auto status tracking</p>
+        </div>
+
+        <div class="form-container">
+            <form id="activationForm">
+                <div class="form-group">
+                    <label for="pairCode">Pair Code</label>
+                    <input type="text" id="pairCode" class="form-control" placeholder="Enter your 6-digit pair code" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sessionId">Session ID</label>
+                    <input type="text" id="sessionId" class="form-control" placeholder="Enter your unique session ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">WhatsApp Number</label>
+                    <input type="text" id="phoneNumber" class="form-control" placeholder="e.g., 919876543210 (with country code)" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-robot"></i>
+                    Activate Bot
+                </button>
+            </form>
+
+            <div id="statusMessage" class="status-message">
+                <!-- Status messages will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('activationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const pairCode = document.getElementById('pairCode').value;
+            const sessionId = document.getElementById('sessionId').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.innerHTML = `
+                <div class="info">
+                    <i class="fas fa-circle-notch fa-spin icon"></i>
+                    Activating bot, please wait...
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <ul class="checklist">
+                    <li><i class="fas fa-check-circle icon"></i> Validating credentials</li>
+                    <li><i class="far fa-circle icon" id="step2"></i> Connecting to WhatsApp</li>
+                    <li><i class="far fa-circle icon" id="step3"></i> Initializing bot</li>
+                    <li><i class="far fa-circle icon" id="step4"></i> Setting up status watcher</li>
+                </ul>
+            `;
+            statusDiv.className = 'status-message info';
+            
+            // Animate progress bar
+            const progressBar = document.getElementById('progressBar');
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                if (progress >= 100) clearInterval(progressInterval);
+            }, 300);
+
+            try {
+                const response = await fetch('/api/bot/activate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId, phoneNumber, pairCode })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update checklist
+                    document.getElementById('step2').className = 'fas fa-check-circle icon';
+                    document.getElementById('step3').className = 'fas fa-check-circle icon';
+                    
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <i class="fas fa-check-circle icon"></i>
+                            ${data.message}
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <ul class="checklist">
+                            <li><i class="fas fa-check-circle icon"></i> Credentials validated</li>
+                            <li><i class="fas fa-check-circle icon"></i> Connected to WhatsApp</li>
+                            <li><i class="fas fa-check-circle icon"></i> Bot initialized</li>
+                            <li><i class="fas fa-circle-notch fa-spin icon" id="step4"></i> Setting up status watcher</li>
+                        </ul>
+                    `;
+                    statusDiv.className = 'status-message success';
+                    
+                    // Check activation status periodically
+                    let checks = 0;
+                    const maxChecks = 10;
+                    const checkInterval = setInterval(async () => {
+                        checks++;
+                        const statusResponse = await fetch(`/api/bot/status?sessionId=${sessionId}`);
+                        const statusData = await statusResponse.json();
+                        
+                        if (statusData.isActive || checks >= maxChecks) {
+                            clearInterval(checkInterval);
+                            if (statusData.isActive) {
+                                document.getElementById('step4').className = 'fas fa-check-circle icon';
+                                statusDiv.innerHTML += `
+                                    <div class="success" style="margin-top: 15px;">
+                                        <i class="fas fa-check-circle icon"></i>
+                                        Bot is now active and monitoring status updates!
+                                    </div>
+                                `;
+                            } else {
+                                statusDiv.innerHTML += `
+                                    <div class="error" style="margin-top: 15px;">
+                                        <i class="fas fa-exclamation-circle icon"></i>
+                                        Activation failed. Please try again.
+                                    </div>
+                                `;
+                            }
+                        } else {
+                            statusDiv.innerHTML += `
+                                <div style="margin-top: 10px; color: var(--gray); font-size: 0.8rem;">
+                                    <i class="fas fa-sync-alt icon"></i>
+                                    Checking status... (${checks}/${maxChecks})
+                                </div>
+                            `;
+                        }
+                    }, 30000); // Check every 30 seconds
+                } else {
+                    clearInterval(progressInterval);
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-circle icon"></i>
+                            Error: ${data.error}
+                        </div>
+                    `;
+                    statusDiv.className = 'status-message error';
+                }
+            } catch (error) {
+                clearInterval(progressInterval);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-circle icon"></i>
+                        Network error: ${error.message}
+                    </div>
+                `;
+                statusDiv.className = 'status-message error';
+            }
+        });
+    </script>
+</body>
+</html>
